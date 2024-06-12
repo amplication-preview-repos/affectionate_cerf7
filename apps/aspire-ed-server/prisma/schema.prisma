@@ -1,0 +1,64 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Cms {
+  content   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  pageTitle String?
+  published Boolean?
+  updatedAt DateTime @updatedAt
+}
+
+model Document {
+  createdAt   DateTime @default(now())
+  description String?
+  file        Json?
+  id          String   @id @default(cuid())
+  title       String?
+  updatedAt   DateTime @updatedAt
+  uploadedBy  String?
+}
+
+model Quiz {
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  description String?
+  id          String   @id @default(cuid())
+  title       String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Blog {
+  author        String?
+  content       String?
+  createdAt     DateTime  @default(now())
+  id            String    @id @default(cuid())
+  isPublished   Boolean?
+  publishedDate DateTime?
+  title         String?
+  updatedAt     DateTime  @updatedAt
+}
+
+model User {
+  createdAt DateTime      @default(now())
+  email     String?       @unique
+  firstName String?
+  id        String        @id @default(cuid())
+  lastName  String?
+  password  String
+  role      EnumUserRole?
+  roles     Json
+  updatedAt DateTime      @updatedAt
+  username  String        @unique
+}
+
+enum EnumUserRole {
+  Option1
+}
